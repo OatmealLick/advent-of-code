@@ -2,3 +2,7 @@
 **/**/__pycache__/
 **/*.iml
 venv
+.calva
+.clj-kondo
+.lsp
+
