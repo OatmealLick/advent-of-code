@@ -4,7 +4,7 @@ import functools
 def main():
     filename = "input.txt"
     # filename = "input-sample.txt"
-    with open(f"day13/{filename}", "r") as f:
+    with open(f"2022/day13/{filename}", "r") as f:
         lines = [x.strip() for x in f.readlines()]
         part1_result = part1(lines[:])
         print(part1_result)
@@ -32,7 +32,6 @@ def are_inputs_in_right_order(left, right):
     elif not left and right:  # left has no items but right has
         return True
     elif not left and not right:
-        print("UNSURE")
         return None
 
     for i in range(max(len(left), len(right))):
@@ -61,7 +60,6 @@ def are_inputs_in_right_order(left, right):
                 return True
             elif l > r:
                 return False
-    print("END OF FOR = UNSURE")
     return None
 
 
@@ -75,7 +73,6 @@ def part2(lines):
         packets.append(left)
         packets.append(right)
     packets.sort(key=functools.cmp_to_key(custom_sort))
-    print(packets)
     i2 = packets.index([[2]]) + 1
     i6 = packets.index([[6]]) + 1
     print(i2, i6)
