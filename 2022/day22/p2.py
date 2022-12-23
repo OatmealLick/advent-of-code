@@ -44,7 +44,6 @@ def test(b):
 
     res = list(map(lambda c: next_step(c[0], c[1], b), cases))
     [print(a) for a in zip(res, tuple((c[2], c[3]) for c in cases))]
-    # print(res)
     results = [next_step(c[0], c[1], b) == (c[2], c[3]) for c in cases]
     assert all(results)
 
@@ -89,7 +88,6 @@ def solve(lines):
         else:
             rot = rotate(rot, c)
         print(f"After {c}, has pos {p} and rot {rot}")
-        # printb(b, wasthere)
 
     printb(b, wasthere)
     print(p, rot)
