@@ -14,14 +14,21 @@ def main():
 
 def solve(lines):
     x = {}
+    key = 811589153
+    # key = 1
+    lines = [int(l) * key for l in lines]
     for i, l in enumerate(lines):
         x[i] = (i, int(l))
     print("Initial")
     printd(x)
-    for i, l in enumerate(lines):
-        x = move(x, i, int(l))
-        print(f"After move x {i} {int(l)}")
-        # printd(x)
+    for j in range(10):
+    # for j in range(1):
+        for i, l in enumerate(lines):
+            x = move(x, i, int(l))
+            # print(f"After move x {i} {int(l)}")
+        printd(x)
+        print(j)
+
     offset = [k for k, v in x.items() if v[1] == 0][0]
     print(offset)
     a = x[(offset + 1000) % len(x)][1]
@@ -38,7 +45,7 @@ def printd(x):
         l.append(f"{k}:{x[k]}, ")
     l.append("}")
     print("".join(l))
-    print([x[k] for k in ks])
+    print([x[k][1] for k in ks])
     print()
 
 
@@ -46,9 +53,14 @@ def getvalues(x):
     ks = sorted(x.keys())
     return [x[k] for k in ks]
 
+
 def move(x, i, a):
     ind = [k for k, v in x.items() if v == (i, a)][0]
     while a != 0:
+        if a > len(x) - 1:
+            a = a % (len(x) - 1)
+        elif a < -(len(x) - 1):
+            a = a % (len(x) - 1)
         if a > 0:
             x, ind = move_right(x, ind)
             a -= 1
@@ -62,6 +74,12 @@ def move_right(x, ind):
     if (ind + 1) < (len(x) - 1):
         x[ind], x[ind + 1] = x[ind + 1], x[ind]
         return x, ind + 1
+    elif ind == len(x) - 1:
+        i, a = x.pop(ind)
+        firsti, firsta = x.pop(0)
+        tomove = {(k + 1): v for k, v in x.items()}
+        tomove.update({0: (firsti, firsta), 1: (i, a)})
+        return tomove, 1
     else:
         i, a = x.pop(ind)
         tomove = {((k + 1) if (k < ind) else k): v for k, v in x.items()}
@@ -73,6 +91,13 @@ def move_left(x, ind):
     if (ind - 1) > 0:
         x[ind], x[ind - 1] = x[ind - 1], x[ind]
         return x, ind - 1
+    elif ind == 0:
+        xlen = len(x)
+        i, a = x.pop(ind)
+        lasti, lasta = x.pop(xlen - 1)
+        tomove = {(k - 1): v for k, v in x.items()}
+        tomove.update({(xlen - 2): (lasti, lasta), (xlen - 1): (i, a)})
+        return tomove, xlen - 1
     else:
         i, a = x.pop(ind)
         tomove = {((k - 1) if (k > ind) else k): v for k, v in x.items()}
