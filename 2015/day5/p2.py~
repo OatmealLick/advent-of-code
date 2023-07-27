@@ -1,0 +1,43 @@
+from functools import reduce
+
+from collections import defaultdict
+
+
+def main():
+    filename = "input.txt"
+    # filename = "input-sample.txt"
+    with open(f"2015/day5/{filename}", "r") as f:
+        lines = [x.strip() for x in f.readlines()]
+        print(solve(lines[:]))
+
+
+def solve(lines):
+    return reduce(lambda agg, x: agg + (1 if is_nice(x) else 0), lines, 0)
+
+def is_nice(s):
+    return has_three_vowels(s) and has_double_letter(s) and has_no_forbidden_strings(s)
+
+def has_three_vowels(s):
+    vowels = "aeiou"
+    counter = 0
+    for i, c in enumerate(s):
+        if c in vowels:
+            counter += 1
+            if counter >= 3:
+                return True
+    return False
+
+def has_double_letter(s):
+    for i in range(len(s) - 1):
+        c = s[i]
+        nc = s[i + 1]
+        if c == nc:
+            return True
+    return False
+
+def has_no_forbidden_strings(s):
+    forbidden = ["ab", "cd", "pq", "xy"]
+    return all(map(lambda x: x not in s, forbidden))
+
+if __name__ == "__main__":
+    main()
