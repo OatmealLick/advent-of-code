@@ -6,3 +6,7 @@ venv
 .clj-kondo
 .lsp
 
+
+**/*.exe
+**/*.obj
+**/*.pdb
