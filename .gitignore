@@ -10,3 +10,4 @@ venv
 **/*.exe
 **/*.obj
 **/*.pdb
+**/.build
