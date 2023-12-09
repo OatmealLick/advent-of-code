@@ -134,7 +134,7 @@ part2 :: () {
         for location: it.dest..it.dest + it.len - 1 {
             // location - sorted by asc
             value := location;
-            if location % 100_000 == 0 log("Checking location %", location);
+            //if location % 100_000 == 0 log("Checking location %", location);
             for map_index: 0..maps.count - 1 {
                 map := maps[map_index];
                 mapping_range_index := 0;
